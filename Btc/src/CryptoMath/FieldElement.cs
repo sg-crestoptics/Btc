@@ -17,6 +17,13 @@
 
         #region OperatorOverloading
 
+        #region ToString
+        public override string ToString()
+        {
+            return $"({Value},{Prime})";
+        }
+        #endregion
+
         #region Equality
         public override bool Equals(object obj) => this.Equals(obj as FieldElement);
         // override object.Equals
@@ -80,7 +87,7 @@
                 throw new InvalidOperationException("Cannot multiply two field elements with different prime values!");
             int valueSum = (lhs.Value * rhs.Value) % lhs.Prime;
             int value = valueSum > 0 ? valueSum : lhs.Prime + valueSum;
-            return new FieldElement(value, lhs.Prime);
+            return new FieldElement(valueSum, lhs.Prime);
         }
         public static FieldElement operator *(FieldElement lhs, int rhs)
         {
@@ -88,6 +95,7 @@
             int value = valueSum > 0 ? valueSum : lhs.Prime + valueSum;
             return new FieldElement(value, lhs.Prime);
         }
+        public static FieldElement operator *(int lhs, FieldElement rhs) => rhs * lhs;
         #endregion
 
         #region Division
